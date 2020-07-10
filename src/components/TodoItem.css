@@ -1,0 +1,26 @@
+.TodoItem {
+  display: flex;
+}
+
+.complate {
+  padding: 3px;
+  border: 1px solid rgb(212, 159, 221);
+  border-radius: 4px;
+}
+
+.todo {
+  margin-left: 5px;
+}
+
+.delete {
+  margin-left: auto;
+  padding: 3px;
+  border: 1px solid rgb(212, 159, 221);
+  border-radius: 4px;
+  background: rgb(212, 159, 221);
+  color: whitesmoke;
+}
+
+.TodoItem + .TodoItem {
+  margin-top: 10px;
+}
