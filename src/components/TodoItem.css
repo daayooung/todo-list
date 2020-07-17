@@ -1,23 +1,43 @@
 .TodoItem {
   display: flex;
+  position: relative;
 }
 
-.complate {
-  padding: 3px;
-  border: 1px solid rgb(212, 159, 221);
+.check {
   border-radius: 4px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3px;
+  border: 1px solid rgb(50, 21, 147);
+  border-radius: 4px;
+  color: gray;
+}
+.checked_text {
+  color: #cccccc;
+  text-decoration: line-through;
 }
 
-.todo {
+.text {
   margin-left: 5px;
 }
 
-.delete {
+.edit {
+  margin-left: 190px;
+  padding: 3px;
+  border-radius: 4px;
+  background: rgb(233, 233, 248);
+  color: gray;
+  position: absolute;
+  right: 44px;
+}
+
+.remove {
   margin-left: auto;
   padding: 3px;
-  border: 1px solid rgb(212, 159, 221);
   border-radius: 4px;
-  background: rgb(212, 159, 221);
+  background: rgb(66, 71, 165);
   color: whitesmoke;
 }
 

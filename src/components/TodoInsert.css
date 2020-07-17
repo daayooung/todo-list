@@ -1,0 +1,26 @@
+.TodoInsert {
+  position: relative;
+}
+input {
+  width: 385px;
+  padding: 10px;
+  outline: none;
+  border: none;
+}
+button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 9px;
+  background: rgb(105, 105, 174);
+  color: white;
+  outline: none;
+  border: none;
+}
+.reset {
+  position: absolute;
+  right: 44px;
+  top: 0;
+  background: rgb(233, 233, 248);
+  color: gray;
+}
