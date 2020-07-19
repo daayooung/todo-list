@@ -1,15 +1,17 @@
 .TodoItem {
   display: flex;
   position: relative;
+  height: 40px;
+  font-weight: 500;
+  line-height: 37px;
 }
 
 .check {
   border-radius: 4px;
-  width: 30px;
+  width: 36px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 3px;
   border: 1px solid rgb(50, 21, 147);
   border-radius: 4px;
   color: gray;
@@ -25,20 +27,10 @@
 
 .edit {
   margin-left: 190px;
-  padding: 3px;
-  border-radius: 4px;
-  background: rgb(233, 233, 248);
-  color: gray;
   position: absolute;
-  right: 44px;
-}
-
-.remove {
-  margin-left: auto;
-  padding: 3px;
-  border-radius: 4px;
-  background: rgb(66, 71, 165);
-  color: whitesmoke;
+  right: 48px;
+  background: rgb(50, 21, 147);
+  color: white;
 }
 
 .TodoItem + .TodoItem {

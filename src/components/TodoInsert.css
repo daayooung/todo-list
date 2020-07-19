@@ -1,26 +1,28 @@
 .TodoInsert {
   position: relative;
+  font-weight: 100;
 }
 input {
   width: 385px;
   padding: 10px;
   outline: none;
   border: none;
+  color: gray;
 }
 button {
   position: absolute;
   right: 0;
   top: 0;
   padding: 9px;
-  background: rgb(105, 105, 174);
-  color: white;
+  border: 1px solid rgb(15, 15, 140);
+  border-radius: 4px;
+  background: rgba(15, 15, 140, 0.2);
+  color: rgb(15, 15, 140);
   outline: none;
-  border: none;
 }
 .reset {
   position: absolute;
-  right: 44px;
+  right: 48px;
   top: 0;
-  background: rgb(233, 233, 248);
-  color: gray;
+  background: none;
 }

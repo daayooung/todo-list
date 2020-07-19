@@ -9,14 +9,12 @@ const TodoItem = ({ todo, onRemove, onToggle, onEditClick }) => {
         {check ? '✓' : ''}
       </div>
       <div className={check ? 'text checked_text' : 'text'}>{text}</div>
-      <div className="edit" onClick={() => onEditClick(id, text, check)}>
+      <button className="edit" onClick={() => onEditClick(id, text, check)}>
         수정
-      </div>
-      {/* 질문: onClick={() => onEditClick(id, text, check)
-        Cannot access 'check' before initialization*/}
-      <div className="remove" onClick={() => onRemove(id)}>
+      </button>
+      <button className="remove" onClick={() => onRemove(id)}>
         삭제
-      </div>
+      </button>
     </div>
   );
 };

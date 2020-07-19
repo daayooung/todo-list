@@ -1,15 +1,16 @@
 .todoTemplate {
-  background: rgb(39, 9, 113);
   width: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 4px;
+  box-shadow: 0 1px 10px 0 rgba(32, 33, 36, 0.5);
   color: white;
 }
 .todoTemplate h1 {
   display: flex;
-
   flex-grow: 1;
+  color: rgb(39, 9, 113);
+  font-size: 2.5rem;
 }

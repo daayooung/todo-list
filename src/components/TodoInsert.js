@@ -8,15 +8,15 @@ const TodoInsert = ({ onInsert, initText, onEdit }) => {
 
   useEffect(() => {
     console.log('first init call', initText.text);
-
     setValue(initText.text);
+    input.current.focus();
 
     if (initText.check) {
       setMode('edit');
+      console.log('current mode', mode);
     } else {
       setMode('insert');
     }
-    console.log('current mode', mode);
   }, [initText]);
   // 질문: React Hook useEffect has a missing dependency: 'mode'. Either include it or remove the dependency array.eslint(react-hooks/exhaustive-deps)
 
@@ -27,6 +27,7 @@ const TodoInsert = ({ onInsert, initText, onEdit }) => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
+      input.current.focus();
       if (!value) {
         alert('할 일을 입력해주세요.');
         return;
@@ -41,7 +42,6 @@ const TodoInsert = ({ onInsert, initText, onEdit }) => {
         setValue('');
         setMode('insert');
       }
-      // input.current.focus();
     },
     [value]
   );
@@ -49,6 +49,7 @@ const TodoInsert = ({ onInsert, initText, onEdit }) => {
   const changeMode = useCallback(() => {
     setMode('insert');
     setValue('');
+    input.current.focus();
   }, [value, mode]);
   // 질문: React Hook useCallback has unnecessary dependencies: 'mode' and 'value'. Either exclude them or remove the dependency array.eslint(react-hooks/exhaustive-deps)
   // 왜 필요없다고 뜰까

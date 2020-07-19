@@ -4,12 +4,10 @@ import TodoTemplate from './components/TodoTemplate';
 import TodoInsert from './components/TodoInsert';
 import TodoList from './components/TodoList';
 
-// 질문: github에 올렸는데 파일들이 안보여요
-
 function createBulkTodos() {
   console.log('1.초기값 세팅');
   const array = [];
-  for (let i = 1; i <= 3; i++) {
+  for (let i = 1; i <= 5; i++) {
     array.push({
       id: i,
       text: `오늘의 할 일 ${i}`,
@@ -23,14 +21,13 @@ const App = () => {
   const [todos, setTodos] = useState(createBulkTodos);
   const [initText, setinitText] = useState({ id: '', text: '', check: false });
 
-  let nextId = useRef(todos.length + 1);
-  // 질문: todos.length하면 생성한 할일을 삭제할 때 마지막 할 일도 id값이 같아서 같이 삭제가 된다.
+  let nextId = useRef(todos.length);
 
-  // 추가될 할일들.
-  // useCallback을 이용하여 함수 재사용 : onInsert, onRemove와 같은 함수들은 컴포넌트가 리렌더링 될 때 마다 새로 만들어진다. 함수를 선언하는 것 자체는 메모리, CPU, 리소스를 많이 차지 하는 작업은 아니라 큰 부하가 생길일은 없지만, 한 번 만든 함수를 필요할때만 새로 만들고 재사용함으로써, component에서 props 가 바뀌지 않았으면 Virtual DOM 에 새로 렌더링하는 것 조차 하지 않고 component의 결과물을 재사용 하는 최적화 작업을 할 수 있다.
   const onInsert = useCallback(
     (text) => {
       console.log('2. onInsert callback');
+
+      nextId.current += 1;
 
       const todo = {
         id: nextId.current,
@@ -38,7 +35,6 @@ const App = () => {
         check: false
       };
       setTodos(todos.concat(todo));
-      nextId.current += 1;
     },
     [todos]
   );
@@ -75,7 +71,9 @@ const App = () => {
     check = !check;
     setinitText({ id, text, check });
   });
-  // 질문: 'check' has already been declared
+
+  // 질문: var check = !check; => 'check' has already been declared
+  // 오류 나는데 선생님꺼에선 왜 안날까요
   return (
     <>
       <TodoTemplate>
