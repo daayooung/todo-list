@@ -4,6 +4,8 @@ import TodoTemplate from './components/TodoTemplate';
 import TodoInsert from './components/TodoInsert';
 import TodoList from './components/TodoList';
 
+// 질문: github에 올렸는데 파일들이 안보여요
+
 function createBulkTodos() {
   console.log('1.초기값 세팅');
   const array = [];
@@ -69,8 +71,8 @@ const App = () => {
     [todos]
   );
 
-  const onEditClick = useCallback((id, text) => {
-    let check = !check;
+  const onEditClick = useCallback((id, text, check) => {
+    check = !check;
     setinitText({ id, text, check });
   });
   // 질문: 'check' has already been declared

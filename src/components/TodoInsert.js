@@ -18,6 +18,7 @@ const TodoInsert = ({ onInsert, initText, onEdit }) => {
     }
     console.log('current mode', mode);
   }, [initText]);
+  // 질문: React Hook useEffect has a missing dependency: 'mode'. Either include it or remove the dependency array.eslint(react-hooks/exhaustive-deps)
 
   const onChange = useCallback((e) => {
     setValue(e.target.value);
@@ -30,7 +31,7 @@ const TodoInsert = ({ onInsert, initText, onEdit }) => {
         alert('할 일을 입력해주세요.');
         return;
       }
-      if (mode == 'insert') {
+      if (mode === 'insert') {
         console.log('insert mode');
         onInsert(value);
         setValue('');
@@ -49,6 +50,8 @@ const TodoInsert = ({ onInsert, initText, onEdit }) => {
     setMode('insert');
     setValue('');
   }, [value, mode]);
+  // 질문: React Hook useCallback has unnecessary dependencies: 'mode' and 'value'. Either exclude them or remove the dependency array.eslint(react-hooks/exhaustive-deps)
+  // 왜 필요없다고 뜰까
 
   return (
     <form className="TodoInsert" onSubmit={onSubmit}>
@@ -58,12 +61,14 @@ const TodoInsert = ({ onInsert, initText, onEdit }) => {
         onChange={onChange}
         ref={input}
       />
-      {mode == 'edit' ? (
-        <button onClick={changeMode}>초기화</button>
+      {mode === 'edit' ? (
+        <button className="reset" onClick={changeMode}>
+          초기화
+        </button>
       ) : (
         <div></div>
       )}
-      <button type="submit">추가</button>
+      <button type="submit">{mode === 'insert' ? '추가' : '수정'}</button>
     </form>
   );
 };
