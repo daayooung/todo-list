@@ -1,9 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { List } from 'react-virtualized';
 import TodoItem from './TodoItem';
+import { TodoContext } from '../TodoStore';
 import './TodoList.css';
 
-const TodoList = ({ todos, onRemove, onToggle, onEditClick }) => {
+const TodoList = () => {
+  const { todos, onRemove, onToggle, onEditClick } = useContext(TodoContext);
+
   const rowRenderer = useCallback(
     ({ index, key, style }) => {
       const todo = todos[index];

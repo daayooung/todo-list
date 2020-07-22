@@ -1,7 +1,16 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, {
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+  useContext
+} from 'react';
+import { TodoContext } from '../TodoStore.js';
 import './TodoInsert.css';
 
-const TodoInsert = ({ onInsert, initText, onEdit }) => {
+const TodoInsert = () => {
+  const { onInsert, initText, onEdit } = useContext(TodoContext);
+
   const [value, setValue] = useState('');
   const [mode, setMode] = useState('insert');
   const input = useRef('');

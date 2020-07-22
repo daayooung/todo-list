@@ -1,8 +1,10 @@
 import React, { useState, useCallback, useRef } from 'react';
-import './App.css';
+import './TodoStore.css';
 import TodoTemplate from './components/TodoTemplate';
 import TodoInsert from './components/TodoInsert';
 import TodoList from './components/TodoList';
+
+export const TodoContext = React.createContext();
 
 function createBulkTodos() {
   console.log('1.초기값 세팅');
@@ -17,7 +19,7 @@ function createBulkTodos() {
   return array;
 }
 
-const App = () => {
+const TodoStore = () => {
   const [todos, setTodos] = useState(createBulkTodos);
   const [initText, setinitText] = useState({ id: '', text: '', check: false });
 
@@ -75,18 +77,23 @@ const App = () => {
   // 질문: var check = !check; => 'check' has already been declared
   // 오류 나는데 선생님꺼에선 왜 안날까요
   return (
-    <>
+    <TodoContext.Provider
+      value={{
+        todos,
+        onInsert,
+        initText,
+        onEdit,
+        onRemove,
+        onToggle,
+        onEditClick
+      }}
+    >
       <TodoTemplate>
-        <TodoInsert onInsert={onInsert} initText={initText} onEdit={onEdit} />
-        <TodoList
-          todos={todos}
-          onRemove={onRemove}
-          onToggle={onToggle}
-          onEditClick={onEditClick}
-        />
+        <TodoInsert />
+        <TodoList />
       </TodoTemplate>
-    </>
+    </TodoContext.Provider>
   );
 };
 
-export default App;
+export default TodoStore;
