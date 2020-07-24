@@ -14,7 +14,7 @@
 
 # 2. Component
 
-## [App]
+## [Todostore]
 
 ### createBulkTodos
 
@@ -60,8 +60,8 @@ setTodos((todos) => todos.concat(todo));
 
 * useCallback
 
-- App.js 안의 모든 state들 중 하나라도 바뀌면 rerendering이 일어난다.
-- rerendering이 일어나면 App.js안에 속한 모든 기능들이 다시 전부 수행되고, 함수들도 재생성된다. 함수를 선언하는 것 자체는 메모리, CPU, 리소스를 많이 차지 하는 작업은 아니라 큰 부하가 생길일은 없지만,
+- Todostore.js 안의 모든 state들 중 하나라도 바뀌면 rerendering이 일어난다.
+- rerendering이 일어나면 Todostore.js안에 속한 모든 기능들이 다시 전부 수행되고, 함수들도 재생성된다. 함수를 선언하는 것 자체는 메모리, CPU, 리소스를 많이 차지 하는 작업은 아니라 큰 부하가 생길일은 없지만,
 - onInsert() 함수는 다른 변수가 변경되던 말던 메모리상에 딱 한 번만 존재하면 되고, component에서 props가 바뀌지 않았으면 Virtual DOM 에 새로 렌더링하는 것 조차 하지 않고 component의 결과물을 재사용 하는 최적화 작업을 할 수 있다.
 - 두번째 인자로 받아온 값이 바뀔 때만 함수를 재생성 한다. 할 일 목록인 todos가 바뀔 때만 함수가 호출되면 되므로 관찰할 인자로 todos를 준다.
   두 번째 인자를 []빈 배열로 주면 함수가 최초 한 번만 호출이 되어 아무리 여러 번 클릭해도 새 할 일 목록이 하나만 생성된다.)
@@ -91,6 +91,7 @@ setTodos((todos) => todos.concat(todo));
 ```
 
 - 클릭한 id값을 인자로 받아 todos 안의 list들과 비교하다가 같은 id값을 가진 항목이 있으면 check값을 반대로 설정하고 그 값을 return
+- 기존 데이터를 수정할 때 직접 수정하지 않고, ...todo로 새로운 배열을 만든 다음 새로운 객체를 만들어 필요한 부분을 교체해 주는 방식으로 구현했다.(check: !todo.check) 업데이트가 필요한 곳에서는 아예 새로운 배열 혹은 새로운 객체를 만들기 때문에, React.memo를 사용했을 때 props가 바뀌었는지 혹은 바뀌지 않았는지를 알아내서 리렌더링 성능을 최적화해 줄 수 있다.
 
 ### onEdit()
 
@@ -131,6 +132,13 @@ setinitText({ id, text, check });
 });
 ```
 
+### useReducer
+
+- useReducer를 사용할 때는 원래 두 번째 parameter에 초기 상태를 넣어 주어야 한다.
+  지금처럼 두 번째 parameter에 undefined를 넣고, 세 번째 parameter에 초기 상태를 만들어 주는 함수 createBulkTodos를 넣어 주면 component가 맨 처음 렌더링될 때만 createBulkTodos 함수가 호출된다.
+- useReducer를 사용하면 기존 코드를 많이 수정해야 하지만 상태를 업데이트하는 로직을 모아 component 바깥에 둘 수 있는 것이 장점이다.
+- 성능상으로 useState 사용 후 함수형 업데이트를 하는 것과 크게 차이나지 않는다.
+
 ## [TodoTemplate]
 
 - 모든 Component들의 container 역할
@@ -141,7 +149,7 @@ setinitText({ id, text, check });
 입력과 제출 담당
 
 - input창에 value 입력
-- App.js에 value값 전달
+- Todostore.js에 value값 전달
 - TodoList, TodoItem에 props로 넘긴다.
 
 ### value
@@ -229,7 +237,7 @@ setMode('insert');
 ```
 const TodoItem = ({ todo, onRemove, onToggle, onEditClick }) => {
 
-// App, TodoLis (부모 component)로 부터 물려받은 props들
+// Todostore, TodoList (부모 component)로 부터 물려받은 props들
 
   const { id, text, check } = todo;
   return (
@@ -254,6 +262,7 @@ const TodoItem = ({ todo, onRemove, onToggle, onEditClick }) => {
 
 export default React.memo(TodoItem);
 
-- props가 바뀌지 않으면 리렌더링 하지 않도록 설정하여 함수형 컴포넌트의 리렌더링 최적화
+- props({ todo, onRemove, onToggle, onEditClick })가 바뀌지 않으면 리렌더링 하지 않도록 설정하여 함수형 컴포넌트의 리렌더링 최적화
+- React.memo를 사용할 때는 불변성을 지켜야(ex. ... 문법) 객체 내부의 값이 새로워 질 때 바뀐 것을 감지히야 최적화 할 수 있다.
 
 ```

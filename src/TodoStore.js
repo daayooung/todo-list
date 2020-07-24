@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useReducer, useCallback, useRef } from 'react';
 import './TodoStore.css';
 import TodoTemplate from './components/TodoTemplate';
 import TodoInsert from './components/TodoInsert';
@@ -19,55 +19,56 @@ function createBulkTodos() {
   return array;
 }
 
+function todoReducer(todos, action) {
+  switch (action.type) {
+    case 'INSERT':
+      return todos.concat(action.todo);
+    case 'REMOVE':
+      return todos.filter((todo) => todo.id !== action.id);
+    case 'TOGGLE':
+      return todos.map((todo) =>
+        todo.id === action.id ? { ...todo, check: !todo.check } : todo
+      );
+    case 'EDIT':
+      return todos.map((todo) =>
+        todo.id === action.id ? { ...todo, text: action.text } : todo
+      );
+    default:
+      return todos;
+  }
+}
+
 const TodoStore = () => {
-  const [todos, setTodos] = useState(createBulkTodos);
+  const [todos, dispatch] = useReducer(todoReducer, undefined, createBulkTodos);
   const [initText, setinitText] = useState({ id: '', text: '', check: false });
 
   let nextId = useRef(todos.length);
 
-  const onInsert = useCallback(
-    (text) => {
-      console.log('2. onInsert callback');
+  const onInsert = useCallback((text) => {
+    console.log('2. onInsert callback');
 
-      nextId.current += 1;
+    nextId.current += 1;
 
-      const todo = {
-        id: nextId.current,
-        text,
-        check: false
-      };
-      setTodos(todos.concat(todo));
-    },
-    [todos]
-  );
+    const todo = {
+      id: nextId.current,
+      text,
+      check: false
+    };
+    dispatch({ type: 'INSERT', todo });
+  }, []);
 
-  const onRemove = useCallback(
-    (id) => {
-      console.log('3. onremove callback');
-      setTodos(todos.filter((todo) => todo.id !== id));
-    },
-    [todos]
-  );
+  const onRemove = useCallback((id) => {
+    console.log('3. onremove callback');
+    dispatch({ type: 'REMOVE', id });
+  }, []);
 
-  const onToggle = useCallback(
-    (id) => {
-      setTodos(
-        todos.map((todo) =>
-          todo.id === id ? { ...todo, check: !todo.check } : todo
-        )
-      );
-    },
-    [todos]
-  );
+  const onToggle = useCallback((id) => {
+    dispatch({ type: 'TOGGLE', id });
+  }, []);
 
-  const onEdit = useCallback(
-    (id, text) => {
-      setTodos(
-        todos.map((todo) => (todo.id === id ? { ...todo, text: text } : todo))
-      );
-    },
-    [todos]
-  );
+  const onEdit = useCallback((id, text) => {
+    dispatch({ type: 'EDIT', id, text });
+  }, []);
 
   const onEditClick = useCallback((id, text, check) => {
     check = !check;
