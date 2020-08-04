@@ -9,7 +9,7 @@ export const TodoContext = React.createContext();
 function createBulkTodos() {
   console.log('1.초기값 세팅');
   const array = [];
-  for (let i = 1; i <= 5; i++) {
+  for (let i = 1; i <= 500; i++) {
     array.push({
       id: i,
       text: `오늘의 할 일 ${i}`,
@@ -70,13 +70,13 @@ const TodoStore = () => {
     dispatch({ type: 'EDIT', id, text });
   }, []);
 
-  const onEditClick = useCallback((id, text, check) => {
-    check = !check;
+  const onEditClick = useCallback((id, text) => {
+    var check = !check;
     setinitText({ id, text, check });
   });
 
   // 질문: var check = !check; => 'check' has already been declared
-  // 오류 나는데 선생님꺼에선 왜 안날까요
+  //  답: 파라미터로 받아오는 이름이랑 안에서 쓰는 이름이랑 같아서 오류표시가 난 것
   return (
     <TodoContext.Provider
       value={{

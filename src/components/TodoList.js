@@ -38,6 +38,7 @@ const TodoList = () => {
   );
 };
 
-export default TodoList;
+export default React.memo(TodoList);
 
 // 질문 : item개수가 9개가 넘어가면 스크롤을 사용하여 목록을 보는데 불편함이 생긴다.
+// TodoItem props에 style추가로 해결

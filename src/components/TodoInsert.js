@@ -28,6 +28,7 @@ const TodoInsert = () => {
     }
   }, [initText]);
   // 질문: React Hook useEffect has a missing dependency: 'mode'. Either include it or remove the dependency array.eslint(react-hooks/exhaustive-deps)
+  // 답: mode는 console.log()에 찍어낼 때만 사용하고 있기 때문이다.
 
   const onChange = useCallback((e) => {
     setValue(e.target.value);
@@ -59,9 +60,10 @@ const TodoInsert = () => {
     setMode('insert');
     setValue('');
     input.current.focus();
-  }, [value, mode]);
+  }, []);
   // 질문: React Hook useCallback has unnecessary dependencies: 'mode' and 'value'. Either exclude them or remove the dependency array.eslint(react-hooks/exhaustive-deps)
   // 왜 필요없다고 뜰까
+  // 답: value, mode의 값을 바라보다가 어떤 일을 하는 것이 아니고, mode를 무조건 'insert'로 변경하고, value를 ''로 만드는 것이기 때문에 dep가 필요하지 않다.
 
   return (
     <form className="TodoInsert" onSubmit={onSubmit}>
